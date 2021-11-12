@@ -1,10 +1,12 @@
 from django.db.models.query import QuerySet
 from django.shortcuts import render
-from rest_framework import generics, serializers
-from .models import Soporte,PQR
+from rest_framework import views, generics, authentication, permissions, status
+from rest_framework.response import Response
+from .models import Bank, Soporte,PQR
 from servicioCliente.models import Soporte
-from .serializer import SoporteSerializer, PQRSerializer
+from .serializer import BankSerializar, SoporteSerializer, PQRSerializer
 from rest_framework import generics, authentication, permissions
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -26,5 +28,17 @@ class PQRListCreate(generics.ListCreateAPIView):
 class PQRUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
     queryset = PQR.objects.all()
     serializer_class = PQRSerializer
+
+class BankListCreate(generics.ListCreateAPIView):
+    queryset = Bank.objects.all()
+    serializer_class = BankSerializar
+
+class CountUser(views.APIView):
+    def get(self, request):
+        request.data
+        queryset = User.objects.all()
+        con_users = len(queryset)
+        data={"Number of users": con_users}
+        return Response(data=data, status=status.HTTP_200_OK)
 
 

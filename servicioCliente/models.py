@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import aggregates
 from django.db.models.base import Model
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -16,3 +17,8 @@ class PQR(models.Model):
     tipo = models.CharField(max_length=32)
     info = models.TextField()
     created = models.DateField()
+
+class Bank(models.Model):
+    name = models.CharField(max_length=64)
+    address = models.CharField(max_length=64, blank=True, null=True)
+    users = models.ManyToManyField(User)
